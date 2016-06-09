@@ -6,7 +6,7 @@
 The Google API Client Library enables you to work with Google APIs such as Google+, Drive, or YouTube on your server.
 
 ## Beta ##
-This library is in Beta. We're comfortable enough with the stability and features of the library that we want you to build real production applications on it. We will make an effort to support the public and protected surface of the library and maintain backwards compatibility in the future. While we are still in Beta, we reserve the right to make incompatible changes. If we do remove some functionality (typically because better functionality exists or if the feature proved infeasible), our intention is to deprecate and provide ample time for developers to update their code.
+This library is in Beta. We're comfortable enough with the stability and features of the library that we want you to build real production applications on it. We will make an effort to support the public and protected surface of the library and maintain backwards compatibility in the future. While we are still in Beta, we reserve the right to make incompatible changes.
 
 ## Requirements ##
 * [PHP 5.4.0 or higher](http://www.php.net/)
@@ -49,8 +49,8 @@ require_once '/path/to/google-api-php-client/vendor/autoload.php';
 
 For additional installation and setup instructions, see [the documentation](https://developers.google.com/api-client-library/php/start/installation).
 
-## Basic Example ##
-See the examples/ directory for examples of the key client features. You can
+## Examples ##
+See the [`examples/`](examples) directory for examples of the key client features. You can
 view them in your browser by running the php built-in web server.
 
 ```
@@ -59,6 +59,8 @@ $ php -S localhost:8000 -t examples/
 
 And then browsing to the host and port you specified
 (in the above example, `http://localhost:8000`).
+
+### Basic Example ###
 
 ```php
 // include your composer dependencies
@@ -76,6 +78,31 @@ foreach ($results as $item) {
   echo $item['volumeInfo']['title'], "<br /> \n";
 }
 ```
+
+### Authentication with Service Accounts ###
+
+> An example of this in action can be seen in [`examples/service-account.php`](examples/service-account.php).
+
+1. Follow the instructions to [Create a Service Account](https://developers.google.com/api-client-library/php/auth/service-accounts#creatinganaccount)
+1. Download the JSON credentials
+1. Set the path to these credentials using the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
+
+    ```php
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json');
+    ```
+
+1. Tell the Google client to use your service account credentials to authenticate:
+
+    ```php
+    $client = new Google_Client();
+    $client->useApplicationDefaultCredentials();
+    ```
+
+1. If you have delegated domain-wide access to the service account and you want to impersonate a user account, specify the email address of the user account using the method setSubject:
+
+    ```php
+    $   client->setSubject($user_to_impersonate);
+    ```
 
 ### Caching ###
 
