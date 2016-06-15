@@ -79,9 +79,34 @@ foreach ($results as $item) {
 }
 ```
 
+### Authentication with OAuth ###
+
+> An example of this can be seen in [`examples/simple-file-upload.php`](examples/simple-file-upload.php).
+
+1. Follow the instructions to [Create Web Application Credentials](https://developers.google.com/api-client-library/php/auth/web-app#creatingcred)
+1. Download the JSON credentials
+1. Set the path to these credentials using the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
+
+    ```php
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json');
+    ```
+
+1. Tell the Google client to use your service account credentials to authenticate:
+
+    ```php
+    $client = new Google_Client();
+    $client->useApplicationDefaultCredentials();
+    ```
+
+1. If you have delegated domain-wide access to the service account and you want to impersonate a user account, specify the email address of the user account using the method setSubject:
+
+    ```php
+    $   client->setSubject($user_to_impersonate);
+    ```
+
 ### Authentication with Service Accounts ###
 
-> An example of this in action can be seen in [`examples/service-account.php`](examples/service-account.php).
+> An example of this can be seen in [`examples/service-account.php`](examples/service-account.php).
 
 1. Follow the instructions to [Create a Service Account](https://developers.google.com/api-client-library/php/auth/service-accounts#creatinganaccount)
 1. Download the JSON credentials
